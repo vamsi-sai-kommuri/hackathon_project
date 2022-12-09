@@ -61,5 +61,6 @@ This test will be run automatically
 
 ## References
 
-Gtest : http://google.github.io/googletest/quickstart-cmake.html 
-Flatbuffer : https://google.github.io/flatbuffers 
+Gtest : http://google.github.io/googletest/quickstart-cmake.html;
+
+Flatbuffer : https://google.github.io/flatbuffers;
