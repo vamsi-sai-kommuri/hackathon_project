@@ -1,0 +1,3 @@
+bool formConnection();
+
+bool receiveData();

@@ -1,0 +1,13 @@
+add_subdirectory(can)
+#execute_process(COMMAND  
+#C:/MinGW/bin/g++.exe -fdiagnostics-color=always -g E:/my_project/src/client.cpp -o E:/my_project/src/clt.exe -lws2_32)
+
+#execute_process(COMMAND  
+#C:/MinGW/bin/g++.exe -fdiagnostics-color=always -g E:/my_project/src/server.cpp -o E:/my_project/src/srv.exe -lws2_32)
+
+
+#execute_process(COMMAND  
+#E:/my_project/src/srv.exe)
+
+#execute_process(COMMAND  
+#E:/my_project/src/clt.exe)
