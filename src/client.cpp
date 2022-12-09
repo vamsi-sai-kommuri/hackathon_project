@@ -127,11 +127,14 @@ bool receiveData() {
     auto frameData = bufferData->Get(0)->frame();
     auto client_payload = frameData->payload();
     std::ofstream myfile;
+    std::ostringstream os;
     myfile.open("payload_output.log");
     for (size_t i = 0; i < client_payload->size(); i++) {
-      myfile << client_payload->Get(i) ;
+      os << client_payload->Get(i) ;
     }
-      myfile.close();
+    std::string str(os.str());
+    myfile << str;
+    myfile.close();
     exit(0);
   }
   receiveBufferStatus=true;
