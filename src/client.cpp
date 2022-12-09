@@ -132,7 +132,7 @@ bool receiveData() {
     myfile.open("payload_output.log");
     std::string str;
     for (int i = 0; i < client_payload->size(); i++) {
-      printf("%d",client_payload->Get(i));
+      //printf("%d",client_payload->Get(i));
       
        str.push_back(client_payload->Get(i) + '0');
     }
