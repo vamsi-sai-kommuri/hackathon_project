@@ -10,7 +10,7 @@ Implement a client-server model for bulk data using Flatbuffer serialization
 flowchart LR
 ((Data)) --> Client
 Client --> |Send/Recieve|Server
-Server --> (Output))
+Server --> ((Output))
 ```
 
 ## Getting started
