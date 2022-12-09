@@ -13,7 +13,7 @@ using namespace NetworkModels::CAN; // Specified in the schema.
 TEST(CanTests, TestServerComError)
 {
     std::ifstream infile;
-    infile.open("../../../src/server_connection_failure.log");
+    infile.open("../../server_connection_failure.log");
 
     bool ok = infile.fail();
     ASSERT_TRUE(ok);
@@ -21,7 +21,7 @@ TEST(CanTests, TestServerComError)
 TEST(CanTests, TestClientComError)
 {
     std::ifstream infile;
-    infile.open("../../../src/client_connection_failure.log");
+    infile.open("../../client_connection_failure.log");
 
     bool ok = infile.fail();
     ASSERT_TRUE(ok);
@@ -30,7 +30,7 @@ TEST(CanTests, TestClientComError)
 TEST(CanTests, TestClientSendError)
 {
     std::ifstream infile;
-    infile.open("../../../src/client-send-error.log");
+    infile.open("../../client-send-error.log");
     
     bool ok = infile.fail();
     ASSERT_TRUE(ok);
@@ -38,7 +38,7 @@ TEST(CanTests, TestClientSendError)
 TEST(CanTests, TestClientRecieveError)
 {
     std::ifstream infile;
-    infile.open("../../../src/client-receive-error.log");
+    infile.open("../../client-receive-error.log");
     
     bool ok = infile.fail();
     ASSERT_TRUE(ok);
@@ -47,7 +47,7 @@ TEST(CanTests, TestClientRecieveError)
 TEST(CanTests, TestServerSendError)
 {
     std::ifstream infile;
-    infile.open("../../../src/server-send-error.log");
+    infile.open("../../server-send-error.log");
     
     bool ok = infile.fail();
     ASSERT_TRUE(ok);
@@ -56,7 +56,7 @@ TEST(CanTests, TestServerSendError)
 TEST(CanTests, TestServerReceiveError)
 {
     std::ifstream infile;
-    infile.open("../../../src/server-receive-error.log");
+    infile.open("../../server-receive-error.log");
     
     bool ok = infile.fail();
     ASSERT_TRUE(ok);
@@ -64,7 +64,7 @@ TEST(CanTests, TestServerReceiveError)
 TEST(CanTests, TestNetworkCanLog)
 {
     std::ifstream infile;
-    infile.open("../../../src/network.log");
+    infile.open("../../network.log");
     
     bool ok = infile.fail();
     ASSERT_FALSE(ok);
@@ -73,7 +73,7 @@ TEST(CanTests, TestNetworkCanLog)
 TEST(CanTests, TestFlatbufferData)
 {
     std::ifstream infile;
-    infile.open("../../../src/network.can", std::ios::binary | std::ios::in);
+    infile.open("../../network.can", std::ios::binary | std::ios::in);
     infile.seekg(0,std::ios::end);
     int length = infile.tellg();
     infile.seekg(0,std::ios::beg);
@@ -99,28 +99,23 @@ TEST(CanTests, TestFlatbufferData)
     
     ASSERT_FALSE(rtr);
 
-    auto FrameType = frameData->type();
- 
-    auto bufferStatus = bufferData->Get(0)->status();
-
-   
-
-    auto bufferDirection = bufferData->Get(0)->direction();
-    auto canIndicator = bufferData->Get(0)->canFD_enabled();
-    auto messageTiming = bufferData->Get(0)->timing();
 }
-TEST(CanTests, TestPayloadLog)
+
+TEST(CanTests, TestClientNewpayloadLog)
 {
     std::ifstream infile;
-    infile.open("../../../src/payload_output.log");
-    infile.seekg(0,std::ios::end);
-    int length = infile.tellg();
-    infile.seekg(0,std::ios::beg);
-    char *data = new char[length];
-    infile.read(data, length);
-    infile.close();
-
-    ASSERT_EQ(data,'0124');
+    infile.open("../../payload_output.log",std::ios::in);
+     std::string sLine;
+    if (infile.good())
+    {
+       
+        getline(infile, sLine);
+        
+    }
+    
+    std::string str = "0124";
+  
+    ASSERT_TRUE(sLine == str);
 }
 int main(int argc, char** argv)
 {
