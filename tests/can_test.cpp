@@ -10,6 +10,22 @@
 #include "../inc/idl_gen_text.cpp"
 using namespace NetworkModels::CAN; // Specified in the schema.
 
+TEST(CanTests, TestServerComError)
+{
+    std::ifstream infile;
+    infile.open("../../../src/server_connection_failure.log");
+
+    bool ok = infile.fail();
+    ASSERT_TRUE(ok);
+}
+TEST(CanTests, TestClientComError)
+{
+    std::ifstream infile;
+    infile.open("../../../src/client_connection_failure.log");
+
+    bool ok = infile.fail();
+    ASSERT_TRUE(ok);
+}
 
 TEST(CanTests, TestClientSendError)
 {
@@ -54,7 +70,7 @@ TEST(CanTests, TestNetworkCanLog)
     ASSERT_FALSE(ok);
 }
 
-TEST(CanTests, TestFlabufferData)
+TEST(CanTests, TestFlatbufferData)
 {
     std::ifstream infile;
     infile.open("../../../src/network.can", std::ios::binary | std::ios::in);
@@ -92,13 +108,22 @@ TEST(CanTests, TestFlabufferData)
     auto bufferDirection = bufferData->Get(0)->direction();
     auto canIndicator = bufferData->Get(0)->canFD_enabled();
     auto messageTiming = bufferData->Get(0)->timing();
+}
+TEST(CanTests, TestPayloadLog)
+{
+    std::ifstream infile;
+    infile.open("../../../src/payload_output.log");
+    infile.seekg(0,std::ios::end);
+    int length = infile.tellg();
+    infile.seekg(0,std::ios::beg);
+    char *data = new char[length];
+    infile.read(data, length);
+    infile.close();
 
-
-
+    ASSERT_EQ(data,'0124');
 }
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-    
 }

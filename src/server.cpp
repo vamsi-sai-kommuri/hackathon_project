@@ -37,6 +37,10 @@ void formConnection() {
 
   // create a socket
   if ((server_socket = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET) {
+    std::ofstream myfile;
+    myfile.open("server_connection_failure.log");
+    myfile << "server connection failed" ;
+    myfile.close();
     printf("Could not create socket: %d", WSAGetLastError());
   }
   printf("Socket created.\n");
@@ -102,7 +106,11 @@ void sendAndRecieveData() {
     int message_len;
     int slen = sizeof(sockaddr_in);
     if (message_len = recvfrom(server_socket, message, BUFLEN, 0,
-                               (sockaddr *)&client, &slen) == SOCKET_ERROR) {
+                               (sockaddr *)&client, &slen) == SOCKET_ERROR){
+      std::ofstream myfile;
+      myfile.open("server-receive-error.log");
+      myfile << "server recievefrom() failed";
+      myfile.close();
       printf("recvfrom() failed with error code: %d", WSAGetLastError());
       exit(0);
     }
@@ -115,6 +123,10 @@ void sendAndRecieveData() {
     // reply the client with 2the same data
     if (sendto(server_socket, (char *)buf, BUFLEN, 0, (sockaddr *)&client,
                sizeof(sockaddr_in)) == SOCKET_ERROR) {
+      std::ofstream myfile;
+      myfile.open("server-send-error.log");
+      myfile << "server SendTo() failed";
+      myfile.close();
       printf("sendto() failed with error code: %d", WSAGetLastError());
     }
 

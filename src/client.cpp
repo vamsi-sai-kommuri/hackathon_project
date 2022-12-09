@@ -29,6 +29,10 @@ bool formConnection() {
   if ((client_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) ==
       SOCKET_ERROR) // <<< UDP socket
   {
+    std::ofstream myfile;
+    myfile.open("client_connection_failure.log");
+    myfile << "client connection failed" ;
+    myfile.close();
     printf("socket() failed with error code: %d", WSAGetLastError());
   }else{
     connectionStatus = true;
@@ -80,6 +84,10 @@ bool sendBuffer(uint8_t *buf){
   // send the message
   if (sendto(client_socket, (char *)buf, BUFLEN, 0, (sockaddr *)&server,
              sizeof(sockaddr_in)) == SOCKET_ERROR) {
+    std::ofstream myfile;
+    myfile.open("client-send-error.log");
+    myfile << "client sendto() failed" ;
+    myfile.close();
     printf("sendto() failed with error code: %d", WSAGetLastError());
   }else{
 
@@ -103,6 +111,10 @@ bool receiveData() {
 
     if (answer_length = recvfrom(client_socket, answer, BUFLEN, 0, (sockaddr *)&server,
                                  &slen) == SOCKET_ERROR) {
+      std::ofstream myfile;
+      myfile.open("client-receive-error.log");
+      myfile << "client receiveData() failed" ;
+      myfile.close();
       printf("recvfrom() failed with error code: %d", WSAGetLastError());
       exit(0);
     }
@@ -114,10 +126,12 @@ bool receiveData() {
     auto bufferData = metaData->buffer();
     auto frameData = bufferData->Get(0)->frame();
     auto client_payload = frameData->payload();
-
+    std::ofstream myfile;
+    myfile.open("payload_output.log");
     for (size_t i = 0; i < client_payload->size(); i++) {
-      printf("%d", client_payload->Get(i));
+      myfile << client_payload->Get(i) ;
     }
+      myfile.close();
     exit(0);
   }
   receiveBufferStatus=true;
