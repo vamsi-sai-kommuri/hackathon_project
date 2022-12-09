@@ -7,10 +7,10 @@ Implement a client-server model for bulk data using Flatbuffer serialization
 ## Design
 
 ```mermaid
-flowchart LR
-((Data)) --> Client
-Client --> |Send/Recieve|Server
-Server --> ((Output))
+graph TD;
+    Data --> Client;
+    Client --> |Send/Recieve|Server;
+    Server --> Output;
 ```
 
 ## Getting started
